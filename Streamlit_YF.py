@@ -1,9 +1,10 @@
 import yfinance as yf
 import streamlit as st
 
+st.title("HOLA TEAM NLP AQUI PODEMOS HACER COSAS CHEVERES")
 st.write("""
 
-#Hola NATA ERES LA MEJOR
+# Hola NATA ERES LA MEJOR
 # Simple Stock Price App
 Shown are the stock closing price and volume of Google!
 """)
