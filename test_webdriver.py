@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 
 options = Options()
-options.add_argument("--headless")
+#options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
@@ -37,8 +37,8 @@ def get_chromedriver_path():
 def run_selenium():
     name = str()
     with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
-        #url = "https://www.unibet.fr/sport/football/europa-league/europa-league-matchs"
-        #driver.get(url)
+        url = "https://www.unibet.fr/sport/football/europa-league/europa-league-matchs"
+        driver.get(url)
         
         xpath = '//*[@class="ui-mainview-block eventpath-wrapper"]'
         # Wait for the element to be rendered:
