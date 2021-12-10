@@ -33,6 +33,7 @@ st.write('Folder download', dirname)
 
 
 route_chromedriver = st.text_input('Chromedriver path',"")
+route_chromedriver=route_chromedriver.replace("/","\\")
 st.write('Current chromedriver path', route_chromedriver)
 #print(route_chromedriver)
 
