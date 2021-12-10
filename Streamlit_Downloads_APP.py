@@ -189,7 +189,7 @@ if __name__ == "__main__":
         
         st.info('Selenium is running, please wait...')
         Login()
-        #download_audio(new_df,dirname, min, max)
+        download_audio(new_df,dirname, min, max)
 
         show_selenium_log()
     
