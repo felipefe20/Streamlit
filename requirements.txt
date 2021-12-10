@@ -3,3 +3,11 @@ seaborn
 yfinance
 pandas
 numpy
+selenium.webdriver
+datetime
+os
+re
+glob
+csv
+sys
+time
