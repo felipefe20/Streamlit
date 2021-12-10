@@ -5,8 +5,6 @@ pandas
 numpy
 selenium==3.141.0
 datetime
-re
-glob
-csv
+re==2.2.1
 sys
 time
