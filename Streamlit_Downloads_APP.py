@@ -91,6 +91,8 @@ def setting_selenium_options(download_file_path:str)->webdriver.ChromeOptions:
     options.add_experimental_option('prefs', prefs)
     return options
 
+options = setting_selenium_options(download_file_path = dirname)
+
 def delete_selenium_log():
     if os.path.exists('selenium.log'):
         os.remove('selenium.log')
@@ -120,16 +122,16 @@ def Login():
         WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'.button.button-primary'))).click()
 
 
-    time.sleep(10)
+        time.sleep(10)
 
-    driver.get("https://apps.usw2.pure.cloud/directory")
+        driver.get("https://apps.usw2.pure.cloud/directory")
     
 
 
 
 
-setting_selenium_options(dirname)
-options = setting_selenium_options(download_file_path = dirname)
+
+
 #driver = webdriver.Chrome(route_chromedriver, options=options)
 
 st.write(dirname)
@@ -180,20 +182,20 @@ def download_audio(new_df,dirname,min, max):
                 st.write(f"Can't download interaction ID {index}: {row[0]}")
 
 
-
+if __name__ == "__main__":
         
-    
-# executable_path = get_chromedriver_path()
-executable_path = "notset"
-# st.info(f'Chromedriver Path: {str(executable_path)}')
-    
-if st.button('Start Selenium run'):
     delete_selenium_log()
-    st.info('Selenium is running, please wait...')
-    Login()
-    download_audio(new_df,dirname, min, max)
+    # executable_path = get_chromedriver_path()
+    executable_path = "notset"
+    # st.info(f'Chromedriver Path: {str(executable_path)}')
+    st.balloons()
+    if st.button('Start Selenium run'):
+        
+        st.info('Selenium is running, please wait...')
+        Login()
+        #download_audio(new_df,dirname, min, max)
 
-
+        show_selenium_log()
     
 
 
