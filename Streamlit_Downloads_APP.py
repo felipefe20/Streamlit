@@ -68,8 +68,8 @@ st.write("We are going to download interactions of day",d.strftime("%m/%d/%Y"))
 
 
 #Download
-def setting_selenium_options(download_file_path:str)->webdriver.ChromeOptions:
-    
+def setting_selenium_options(download_file_path:str):
+    options = Options()
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
