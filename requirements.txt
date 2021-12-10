@@ -3,9 +3,8 @@ seaborn
 yfinance
 pandas
 numpy
-selenium
+selenium=3.141.0
 datetime
-os
 re
 glob
 csv
