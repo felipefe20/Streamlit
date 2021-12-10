@@ -138,9 +138,9 @@ st.write(dirname)
 
 
 min = st.text_input('Min',"")
-
+min=int(min)
 max = st.text_input('Max',"")
-
+max=int(max)
 def download_audio(new_df,dirname,min, max):
     with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
 
