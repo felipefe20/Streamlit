@@ -188,6 +188,7 @@ executable_path = "notset"
 # st.info(f'Chromedriver Path: {str(executable_path)}')
     
 if st.button('Start Selenium run'):
+    delete_selenium_log()
     st.info('Selenium is running, please wait...')
     Login()
     download_audio(new_df,dirname, min, max)
