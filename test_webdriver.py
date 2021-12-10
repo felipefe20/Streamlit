@@ -89,8 +89,8 @@ if __name__ == "__main__":
     st.balloons()
     if st.button('Start Selenium run'):
         st.info('Selenium is running, please wait...')
-        #result = run_selenium()
-        result=Login()
+        result = run_selenium()
+        #result=Login()
         st.info(f'Result -> {result}')
         st.info('Successful finished. Selenium log file is shown below...')
         show_selenium_log()
