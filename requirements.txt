@@ -3,7 +3,7 @@ seaborn
 yfinance
 pandas
 numpy
-selenium.webdriver
+selenium
 datetime
 os
 re
