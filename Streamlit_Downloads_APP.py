@@ -91,17 +91,33 @@ def setting_selenium_options(download_file_path:str)->webdriver.ChromeOptions:
     options.add_experimental_option('prefs', prefs)
     return options
 
+def delete_selenium_log():
+    if os.path.exists('selenium.log'):
+        os.remove('selenium.log')
 
 
+def show_selenium_log():
+    if os.path.exists('selenium.log'):
+        with open('selenium.log') as f:
+            content = f.read()
+            st.code(content)
 
+def get_chromedriver_path():
+    results = glob.glob('/**/chromedriver', recursive=True)  # workaround on streamlit sharing
+    which = results[0]
+    return which
+            
+            
+      
 # %%
 #LogIn
 def Login(driver):
-    driver.get('https://signin.vivint.com/app/vivintinc_genesyspurecloud_1/exk4bop5qmPYkzu632p7/sso/saml?SAMLRequest=PHNhbWxwOkF1dGhuUmVxdWVzdCB4bWxuczpzYW1scD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOnByb3RvY29sIiB4bWxuczpzYW1sPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIiBJRD0iSEs1RWpqS1ZRWmhFaUVvR0RLQ2xEZ0s1TGkwWWdraWl0b3EzTTJOdHlmSSIgVmVyc2lvbj0iMi4wIiBQcm90b2NvbEJpbmRpbmc9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpiaW5kaW5nczpIVFRQLVBPU1QiIEFzc2VydGlvbkNvbnN1bWVyU2VydmljZVVSTD0iaHR0cHM6Ly9sb2dpbi51c3cyLnB1cmUuY2xvdWQvc2FtbCIgSXNzdWVJbnN0YW50PSIyMDIxLTA4LTI3VDE3OjAyOjUyWiIgRGVzdGluYXRpb249Imh0dHBzOi8vc2lnbmluLnZpdmludC5jb20vYXBwL3ZpdmludGluY19nZW5lc3lzcHVyZWNsb3VkXzEvZXhrNGJvcDVxbVBZa3p1NjMycDcvc3NvL3NhbWwiPjxzYW1sOklzc3Vlcj5odHRwOi8vd3d3Lm9rdGEuY29tL2V4azRib3A1cW1QWWt6dTYzMnA3PC9zYW1sOklzc3Vlcj48c2FtbHA6TmFtZUlEUG9saWN5IEFsbG93Q3JlYXRlPSJ0cnVlIiBGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpuYW1laWQtZm9ybWF0OnRyYW5zaWVudCIvPjwvc2FtbHA6QXV0aG5SZXF1ZXN0Pg%3D%3D')
-    WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'input[id="okta-signin-username"]'))).send_keys("oscar.fernandez")
-    WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'input[id="okta-signin-submit"]'))).click()
-    WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'input[name="password"]'))).send_keys("TPteamNLP2021")
-    WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'.button.button-primary'))).click()
+    with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
+        driver.get('https://signin.vivint.com/app/vivintinc_genesyspurecloud_1/exk4bop5qmPYkzu632p7/sso/saml?SAMLRequest=PHNhbWxwOkF1dGhuUmVxdWVzdCB4bWxuczpzYW1scD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOnByb3RvY29sIiB4bWxuczpzYW1sPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIiBJRD0iSEs1RWpqS1ZRWmhFaUVvR0RLQ2xEZ0s1TGkwWWdraWl0b3EzTTJOdHlmSSIgVmVyc2lvbj0iMi4wIiBQcm90b2NvbEJpbmRpbmc9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpiaW5kaW5nczpIVFRQLVBPU1QiIEFzc2VydGlvbkNvbnN1bWVyU2VydmljZVVSTD0iaHR0cHM6Ly9sb2dpbi51c3cyLnB1cmUuY2xvdWQvc2FtbCIgSXNzdWVJbnN0YW50PSIyMDIxLTA4LTI3VDE3OjAyOjUyWiIgRGVzdGluYXRpb249Imh0dHBzOi8vc2lnbmluLnZpdmludC5jb20vYXBwL3ZpdmludGluY19nZW5lc3lzcHVyZWNsb3VkXzEvZXhrNGJvcDVxbVBZa3p1NjMycDcvc3NvL3NhbWwiPjxzYW1sOklzc3Vlcj5odHRwOi8vd3d3Lm9rdGEuY29tL2V4azRib3A1cW1QWWt6dTYzMnA3PC9zYW1sOklzc3Vlcj48c2FtbHA6TmFtZUlEUG9saWN5IEFsbG93Q3JlYXRlPSJ0cnVlIiBGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpuYW1laWQtZm9ybWF0OnRyYW5zaWVudCIvPjwvc2FtbHA6QXV0aG5SZXF1ZXN0Pg%3D%3D')
+        WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'input[id="okta-signin-username"]'))).send_keys("oscar.fernandez")
+        WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'input[id="okta-signin-submit"]'))).click()
+        WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'input[name="password"]'))).send_keys("TPteamNLP2021")
+        WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'.button.button-primary'))).click()
 
 
     time.sleep(10)
@@ -114,10 +130,12 @@ def Login(driver):
 
 setting_selenium_options(dirname)
 options = setting_selenium_options(download_file_path = dirname)
-driver = webdriver.Chrome(route_chromedriver, options=options)
+#driver = webdriver.Chrome(route_chromedriver, options=options)
 
 st.write(dirname)
-Login(driver)
+
+
+
 
 
 
@@ -126,41 +144,55 @@ min = st.text_input('Min',"")
 max = st.text_input('Max',"")
 
 def download_audio(new_df,dirname,min, max):
-    
-    
-    for index,row in new_df[min:max].iterrows():
-        
-        driver.get(f'https://apps.usw2.pure.cloud/directory/#/engage/admin/interactions/{row[0]}/details')
-        #time.sleep(10)
-        try: 
-            #Frame_reference=driver.find_element_by_xpath('//*[@id="ember1896"]/iframe')
-            #driver.switch_to.frame(Frame_reference)
-            #WebDriverWait(driver, 120).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH,'//*[@id="ember926"]/iframe')))
-            WebDriverWait(driver, 30).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH,'//*[@class="main-iframe visible ember-view"]/iframe')))
-            
-        except:
-            pass
-        
-        try:
-            #time.sleep(15)
-            
-            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'//*[@class="btn btn-link"]'))).click()
+    with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
+
+        for index,row in new_df[min:max].iterrows():
+
+            driver.get(f'https://apps.usw2.pure.cloud/directory/#/engage/admin/interactions/{row[0]}/details')
             #time.sleep(10)
-            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'//*[@class="btn btn-default recording-download-button"]'))).click()
-            
-            #time.sleep(30)
-            descargando = True
-            while descargando == True:
-                carpeta_Download = os.listdir(dirname)
-                #carpeta_Download = os.listdir(r"C:\Users\fernandeztovar.7\Downloads")
-                if f"Call1-{row[0]}.WAV.crdownload" in carpeta_Download:
-                    descargando = False      
-            st.write(f"Downloaded interaction ID {index}: {row[0]}")
+            try: 
+                #Frame_reference=driver.find_element_by_xpath('//*[@id="ember1896"]/iframe')
+                #driver.switch_to.frame(Frame_reference)
+                #WebDriverWait(driver, 120).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH,'//*[@id="ember926"]/iframe')))
+                WebDriverWait(driver, 30).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH,'//*[@class="main-iframe visible ember-view"]/iframe')))
+
+            except:
+                pass
+
+            try:
+                #time.sleep(15)
+
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'//*[@class="btn btn-link"]'))).click()
+                #time.sleep(10)
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'//*[@class="btn btn-default recording-download-button"]'))).click()
+
+                #time.sleep(30)
+                descargando = True
+                while descargando == True:
+                    carpeta_Download = os.listdir(dirname)
+                    #carpeta_Download = os.listdir(r"C:\Users\fernandeztovar.7\Downloads")
+                    if f"Call1-{row[0]}.WAV.crdownload" in carpeta_Download:
+                        descargando = False      
+                st.write(f"Downloaded interaction ID {index}: {row[0]}")
+
+            except:
+
+                st.write(f"Can't download interaction ID {index}: {row[0]}")
+
+
+
         
-        except:
-        
-            st.write(f"Can't download interaction ID {index}: {row[0]}")
-        
-download_audio(new_df,dirname)
+    
+# executable_path = get_chromedriver_path()
+executable_path = "notset"
+# st.info(f'Chromedriver Path: {str(executable_path)}')
+    
+if st.button('Start Selenium run'):
+    st.info('Selenium is running, please wait...')
+    Login(driver)
+    download_audio(new_df,dirname, driver)
+
+
+    
 
 
