@@ -3,7 +3,7 @@ seaborn
 yfinance
 pandas
 numpy
-selenium=3.141.0
+selenium==3.141.0
 datetime
 re
 glob
