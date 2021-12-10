@@ -9,7 +9,6 @@ import datetime
 import os
 import pandas as pd
 import numpy as np
-import re
 import glob
 import csv
 from selenium.webdriver.common.keys import Keys
