@@ -85,6 +85,6 @@ if __name__ == "__main__":
         st.info('Selenium is running, please wait...')
         #result = run_selenium()
         Login()
-        st.info(f'Result -> {result}')
+        #st.info(f'Result -> {result}')
         st.info('Successful finished. Selenium log file is shown below...')
         show_selenium_log()
