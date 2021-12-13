@@ -112,82 +112,85 @@ def set_date_to_fetch(date:str)->str:
     return yesterday_date_str    
 
     
-def download_metadata_day(driver,day):
-    if day=="yesterday":
-        yesterday_date=(pd.to_datetime("today")-timedelta(1)).strftime("%m/%d/%Y")
-        date=yesterday_date
-    else:
-        date=day
-        
-    Hours=[["12:00:00 AM","09:59:59 AM"],["10:00:00 AM","12:59:59 PM"],["13:00:00 PM","15:59:59 PM"],["16:00:00 PM","23:59:59 PM"]]
+def download_metadata_day(day):
+    
+    with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
+        if day=="yesterday":
+            yesterday_date=(pd.to_datetime("today")-timedelta(1)).strftime("%m/%d/%Y")
+            date=yesterday_date
+        else:
+            date=day
 
-    #Show options click
-    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_CHOptionsHeaderPanelID"]'))).click()
+        Hours=[["12:00:00 AM","09:59:59 AM"],["10:00:00 AM","12:59:59 PM"],["13:00:00 PM","15:59:59 PM"],["16:00:00 PM","23:59:59 PM"]]
 
-    #Teleperformance Bogota
-    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]'))).send_keys("Teleperformance Bogota")
-        
-    #MediaType Phone
-    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddMediaType"]'))).send_keys("Phone")
+        #Show options click
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_CHOptionsHeaderPanelID"]'))).click()
 
-    #Iterate hours to download for every day
-    for hour in Hours:
-        #Date1
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).clear()
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).send_keys(date)
-        #Date2
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).clear()
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).send_keys(date)
+        #Teleperformance Bogota
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]'))).send_keys("Teleperformance Bogota")
 
-        #Hour1
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]'))).clear()
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]'))).send_keys(hour[0])
-        #Hour2
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndTime"]'))).clear()
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndTime"]'))).send_keys(hour[1])
+        #MediaType Phone
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddMediaType"]'))).send_keys("Phone")
 
-        #Scroll top of page
-        driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + Keys.HOME)
-        #Apply options
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="btnApplyOptions_ShadowButtonSpan"]'))).click()
-        time.sleep(2)
-        driver.find_element_by_tag_name('body').send_keys(Keys.DOWN)
-        driver.find_element_by_tag_name('body').send_keys(Keys.DOWN)
-        time.sleep(10)
-        
-        #Download
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportMainContent_btnDownload"]'))).click()
+        #Iterate hours to download for every day
+        for hour in Hours:
+            #Date1
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).clear()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).send_keys(date)
+            #Date2
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).clear()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).send_keys(date)
 
-        time.sleep(5)
-        st.write("Succesful metadata day downloaded")
+            #Hour1
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]'))).clear()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]'))).send_keys(hour[0])
+            #Hour2
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndTime"]'))).clear()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndTime"]'))).send_keys(hour[1])
+
+            #Scroll top of page
+            driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + Keys.HOME)
+            #Apply options
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="btnApplyOptions_ShadowButtonSpan"]'))).click()
+            time.sleep(2)
+            driver.find_element_by_tag_name('body').send_keys(Keys.DOWN)
+            driver.find_element_by_tag_name('body').send_keys(Keys.DOWN)
+            time.sleep(10)
+
+            #Download
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportMainContent_btnDownload"]'))).click()
+
+            time.sleep(5)
+            st.write("Succesful metadata day downloaded")
  
 #Ejecución del script completo
 def main(date,download_file_path):
-    # =============================
-    # Selenium Options
-    # =============================
+    with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
+        # =============================
+        # Selenium Options
+        # =============================
 
-    # **********************
-    # PARAMETRO IMPORTANTE
-    # **********************
-    
-    yesterday_date_str = set_date_to_fetch(date=date) # PARAMETRO IMPORTANTE, PASAR 'AYER' si se desea hacer fetch del dia anterior, de lo contrario pasar fecha como string en formato MM-DD-YYYY
-    yesterday_date_folder=yesterday_date_str.replace("/","-")
-    try:
-        os.mkdir(f'{download_file_path}\\{yesterday_date_folder}') # creo una carpeta cuyo nombre es el dia que corresponde a la descarga de la metadata
-    except:
-        pass
-    #os.chdir(download_file_path)
-    #download_file_path = os.getcwd() + f'\\Download folder\\{yesterday_date_folder}'
-    setting_selenium_options(download_file_path)
-    options = setting_selenium_options(download_file_path = download_file_path)
-    driver = webdriver.Chrome("chromedriver.exe", options=options)
-    print(download_file_path)
-    #Login
-    Login(driver)
-    #Metadata
-    download_metadata_day(driver,yesterday_date_str)
-    time.sleep(5)
+        # **********************
+        # PARAMETRO IMPORTANTE
+        # **********************
+
+        yesterday_date_str = set_date_to_fetch(date=date) # PARAMETRO IMPORTANTE, PASAR 'AYER' si se desea hacer fetch del dia anterior, de lo contrario pasar fecha como string en formato MM-DD-YYYY
+        yesterday_date_folder=yesterday_date_str.replace("/","-")
+        try:
+            os.mkdir(f'{download_file_path}\\{yesterday_date_folder}') # creo una carpeta cuyo nombre es el dia que corresponde a la descarga de la metadata
+        except:
+            pass
+        #os.chdir(download_file_path)
+        #download_file_path = os.getcwd() + f'\\Download folder\\{yesterday_date_folder}'
+        setting_selenium_options(download_file_path)
+        options = setting_selenium_options(download_file_path = download_file_path)
+        driver = webdriver.Chrome("chromedriver.exe", options=options)
+        print(download_file_path)
+        #Login
+        Login()
+        #Metadata
+        download_metadata_day(yesterday_date_str)
+        time.sleep(5)
 
 
     
