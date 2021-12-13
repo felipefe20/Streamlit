@@ -174,7 +174,7 @@ def main(date,download_file_path):
     yesterday_date_str = set_date_to_fetch(date=date) # PARAMETRO IMPORTANTE, PASAR 'AYER' si se desea hacer fetch del dia anterior, de lo contrario pasar fecha como string en formato MM-DD-YYYY
     yesterday_date_folder=yesterday_date_str.replace("/","-")
     try:
-        os.mkdir(download_file_path\\{yesterday_date_folder}') # creo una carpeta cuyo nombre es el dia que corresponde a la descarga de la metadata
+        os.mkdir(f'{download_file_path}\\{yesterday_date_folder}') # creo una carpeta cuyo nombre es el dia que corresponde a la descarga de la metadata
     except:
         pass
     #os.chdir(download_file_path)
