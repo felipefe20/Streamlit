@@ -165,6 +165,8 @@ def download_metadata_day(day):
  
 #Ejecución del script completo
 def main(date,download_file_path):
+    setting_selenium_options(download_file_path)
+    options = setting_selenium_options(download_file_path = download_file_path)
     with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
         # =============================
         # Selenium Options
@@ -182,10 +184,10 @@ def main(date,download_file_path):
             pass
         #os.chdir(download_file_path)
         #download_file_path = os.getcwd() + f'\\Download folder\\{yesterday_date_folder}'
-        setting_selenium_options(download_file_path)
-        options = setting_selenium_options(download_file_path = download_file_path)
-        driver = webdriver.Chrome("chromedriver.exe", options=options)
-        print(download_file_path)
+        
+        
+        #driver = webdriver.Chrome("chromedriver.exe", options=options)
+        #print(download_file_path)
         #Login
         Login()
         #Metadata
