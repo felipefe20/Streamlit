@@ -9,14 +9,14 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-#options = Options()
-#options.add_argument("--headless")
-#options.add_argument("--no-sandbox")
-#options.add_argument("--disable-dev-shm-usage")
-#options.add_argument("--disable-gpu")
-#options.add_argument("--disable-features=NetworkService")
-#options.add_argument("--window-size=1920x1080")
-#options.add_argument("--disable-features=VizDisplayCompositor")
+options = Options()
+options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--disable-gpu")
+options.add_argument("--disable-features=NetworkService")
+options.add_argument("--window-size=1920x1080")
+options.add_argument("--disable-features=VizDisplayCompositor")
 
 #initial settings
 def setting_selenium_options(download_file_path:str)->webdriver.ChromeOptions:
@@ -164,9 +164,8 @@ def download_metadata_day(day):
             st.write("Succesful metadata day downloaded")
  
 #Ejecución del script completo
-def main(date,download_file_path):
-    setting_selenium_options(download_file_path)
-    options = setting_selenium_options(download_file_path = download_file_path)
+def main(date,download_file_path,options):
+    
     with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
         # =============================
         # Selenium Options
@@ -222,7 +221,7 @@ if __name__ == "__main__":
     if st.button('Start Selenium run'):
         st.info('Selenium is running, please wait...')
         #result = run_selenium()
-        main("12/10/2021",download_file_path)
+        main("12/10/2021",download_file_path,options)
         #st.info(f'Result -> {result}')
         st.info('Successful finished. Selenium log file is shown below...')
         show_selenium_log()
