@@ -162,7 +162,7 @@ def download_metadata_day(driver,day):
         st.write("Succesful metadata day downloaded")
  
 #Ejecución del script completo
-def main(date):
+def main(date,download_file_path):
     # =============================
     # Selenium Options
     # =============================
@@ -174,11 +174,11 @@ def main(date):
     yesterday_date_str = set_date_to_fetch(date=date) # PARAMETRO IMPORTANTE, PASAR 'AYER' si se desea hacer fetch del dia anterior, de lo contrario pasar fecha como string en formato MM-DD-YYYY
     yesterday_date_folder=yesterday_date_str.replace("/","-")
     try:
-        os.mkdir(os.getcwd() + f'\\Download folder\\{yesterday_date_folder}') # creo una carpeta cuyo nombre es el dia que corresponde a la descarga de la metadata
+        os.mkdir(download_file_path + f'\\Download folder\\{yesterday_date_folder}') # creo una carpeta cuyo nombre es el dia que corresponde a la descarga de la metadata
     except:
         pass
     #os.chdir(download_file_path)
-    download_file_path = os.getcwd() + f'\\Download folder\\{yesterday_date_folder}'
+    #download_file_path = os.getcwd() + f'\\Download folder\\{yesterday_date_folder}'
     setting_selenium_options(download_file_path)
     options = setting_selenium_options(download_file_path = download_file_path)
     driver = webdriver.Chrome("chromedriver.exe", options=options)
@@ -207,6 +207,9 @@ if __name__ == "__main__":
         Afterwards the log file of chromium is read and displayed.
         ---
         """, unsafe_allow_html=True)
+    download_file_path = st.text_input('Folder download',"")
+    download_file_path=download_file_path.replace("/","\\")
+    st.write('Folder download', download_file_path)
     # executable_path = get_chromedriver_path()
     executable_path = "notset"
     # st.info(f'Chromedriver Path: {str(executable_path)}')
@@ -214,7 +217,7 @@ if __name__ == "__main__":
     if st.button('Start Selenium run'):
         st.info('Selenium is running, please wait...')
         #result = run_selenium()
-        main("12/10/2021")
+        main("12/10/2021",download_file_path)
         #st.info(f'Result -> {result}')
         st.info('Successful finished. Selenium log file is shown below...')
         show_selenium_log()
