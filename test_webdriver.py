@@ -34,19 +34,30 @@ def get_chromedriver_path():
     return which
 
 
-def run_selenium():
-    name = str()
-    with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
-        url = "https://www.unibet.fr/sport/football/europa-league/europa-league-matchs"
-        driver.get(url)
-        xpath = '//*[@class="ui-mainview-block eventpath-wrapper"]'
+#def run_selenium():
+#    name = str()
+ #   with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
+  #      url = "https://www.unibet.fr/sport/football/europa-league/europa-league-matchs"
+  #      driver.get(url)
+   #     #xpath = '//*[@class="component__header"]'
         # Wait for the element to be rendered:
-        element = WebDriverWait(driver, 10).until(lambda x: x.find_elements_by_xpath(xpath))
+   #     element = WebDriverWait(driver, 10).until(lambda x: x.find_elements_by_xpath(xpath))
         # element = driver.find_elements_by_xpath(xpath)
-        name = element[0].get_property('attributes')[0]['name']
-        # print(name)
-    return name
+    #    name = element[0].get_property('attributes')[0]['name']
+    #    st.write(name)
+    #return name
+    
+#LogIn
+def Login():
+    with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
+        driver.get('https://home-c13.incontact.com/inContact/Manage/Reports/ContactHistory.aspx')
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_msl_txtUsername"]'))).send_keys("osfernandez@algvacations.com")
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_btnNext"]'))).click()
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_tbxPassword"]'))).send_keys("Avril131215+")
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_btnLogin"]'))).click()
 
+    st.write("Login succesful")
+    
 
 if __name__ == "__main__":
     delete_selenium_log()
@@ -69,7 +80,8 @@ if __name__ == "__main__":
     st.balloons()
     if st.button('Start Selenium run'):
         st.info('Selenium is running, please wait...')
-        result = run_selenium()
+        #result = run_selenium()
+        Login()
         st.info(f'Result -> {result}')
         st.info('Successful finished. Selenium log file is shown below...')
         show_selenium_log()
