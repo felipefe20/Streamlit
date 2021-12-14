@@ -8,6 +8,14 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from datetime import datetime, timedelta
+import time
+
+
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.utils import ChromeType
+
+
 
 options = Options()
 options.add_argument("--headless")
@@ -74,17 +82,24 @@ def get_chromedriver_path():
     #return name
     
 #LogIn
-def Login():
-    with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
-        driver.get('https://home-c13.incontact.com/inContact/Manage/Reports/ContactHistory.aspx')
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_msl_txtUsername"]'))).send_keys("osfernandez@algvacations.com")
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_btnNext"]'))).click()
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_tbxPassword"]'))).send_keys("Avril131215+")
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_btnLogin"]'))).click()
+#def Login():
+#    with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
+#        driver.get('https://home-c13.incontact.com/inContact/Manage/Reports/ContactHistory.aspx')
+#        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_msl_txtUsername"]'))).send_keys("osfernandez@algvacations.com")
+#        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_btnNext"]'))).click()
+#        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_tbxPassword"]'))).send_keys("Avril131215+")
+#        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_btnLogin"]'))).click()
 
-    st.write("Login succesful")
+#    st.write("Login succesful")
 
-    
+def Login(driver):
+    driver.get('https://home-c13.incontact.com/inContact/Manage/Reports/ContactHistory.aspx')
+    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_msl_txtUsername"]'))).send_keys("osfernandez@algvacations.com")
+    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_btnNext"]'))).click()
+    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_tbxPassword"]'))).send_keys("Avril131215+")
+    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_btnLogin"]'))).click()
+
+    st.write("Login succesful")    
 #Date to fetch
 def set_date_to_fetch(date:str)->str:
     """
@@ -186,11 +201,12 @@ def main(date,download_file_path,options):
         
         
         #driver = webdriver.Chrome("chromedriver.exe", options=options)
+        driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
         #print(download_file_path)
         #Login
-        Login()
+        Login(driver)
         #Metadata
-        download_metadata_day(yesterday_date_str)
+        #download_metadata_day(yesterday_date_str)
         time.sleep(5)
 
 
