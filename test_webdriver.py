@@ -133,14 +133,14 @@ def download_metadata_day(day):
         #Show options click
         #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_CHOptionsHeaderPanelID"]'))).click()
         #time.sleep(30)
-        #driver.find_elements_by_class_name("CHOptionsHeaderPanelButton").click()
+        #driver.find_element_by_class_name("CHOptionsHeaderPanelButton").click()
         
         
         #Teleperformance Bogota
         #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]'))).send_keys("Teleperformance Bogota")
         #time.sleep(2)
         
-        #driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]').send_keys("Teleperformance Bogota")
+        #driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]').send_keys("Teleperformance Bogota")
         
         #MediaType Phone
         time.sleep(2)
@@ -152,26 +152,26 @@ def download_metadata_day(day):
             #Date1
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).clear()          
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).send_keys(date)
-            driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]').clear() 
-            driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]').send_keys(date)
+            driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]').clear() 
+            driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]').send_keys(date)
             #Date2
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).clear()
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).send_keys(date)
             
-            driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]').clear() 
-            driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]').send_keys(date)
+            driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]').clear() 
+            driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]').send_keys(date)
             
             #Hour1
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]'))).clear()
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]'))).send_keys(hour[0])
-            driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]').clear() 
-            driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]').send_keys(hour[0])
+            driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]').clear() 
+            driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]').send_keys(hour[0])
             
             #Hour2
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndTime"]'))).clear()
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndTime"]'))).send_keys(hour[1])
-            driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]').clear() 
-            driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]').send_keys(hour[1])
+            driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]').clear() 
+            driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]').send_keys(hour[1])
             #Scroll top of page
             #driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + Keys.HOME)
             #Apply options
