@@ -131,8 +131,9 @@ def download_metadata_day(day):
         Hours=[["12:00:00 AM","09:59:59 AM"],["10:00:00 AM","12:59:59 PM"],["13:00:00 PM","15:59:59 PM"],["16:00:00 PM","23:59:59 PM"]]
 
         #Show options click
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_CHOptionsHeaderPanelID"]'))).click()
-
+        #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_CHOptionsHeaderPanelID"]'))).click()
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,'CHOptionsHeaderPanelButton'))).click()
+        """
         #Teleperformance Bogota
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]'))).send_keys("Teleperformance Bogota")
 
@@ -166,7 +167,7 @@ def download_metadata_day(day):
 
             #Download
             WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportMainContent_btnDownload"]'))).click()
-
+            """
             time.sleep(5)
             st.write("Succesful metadata day downloaded")
  
