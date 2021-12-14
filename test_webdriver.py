@@ -62,30 +62,7 @@ def show_selenium_log():
             content = f.read()
             st.code(content)
 
-
-def get_chromedriver_path():
-    results = glob.glob('/**/chromedriver', recursive=True)  # workaround on streamlit sharing
-    which = results[0]
-    return which
-
-
-#def run_selenium():
-#    name = str()
- #   with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
-  #      url = "https://www.unibet.fr/sport/football/europa-league/europa-league-matchs"
-  #      driver.get(url)
-   #     #xpath = '//*[@class="component__header"]'
-        # Wait for the element to be rendered:
-   #     element = WebDriverWait(driver, 10).until(lambda x: x.find_elements_by_xpath(xpath))
-        # element = driver.find_elements_by_xpath(xpath)
-    #    name = element[0].get_property('attributes')[0]['name']
-    #    st.write(name)
-    #return name
-    
-#LogIn
-def Login(day,download_file_path):
-        
-    
+def Login(day):   
         
     with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
         driver.get('https://home-c13.incontact.com/inContact/Manage/Reports/ContactHistory.aspx')
@@ -150,53 +127,19 @@ def Login(day,download_file_path):
         time.sleep(5)
     st.write("Login and metadata succesful")
    
-#Date to fetch
-def set_date_to_fetch(date:str)->str:
-    """
-    Funcion para setear la fecha que haremos fetch, si el usuario pone de parametro date = ayer, se hara fetch de el dia anterior, de lo contrario
-    puede pasar una fecha cualquiera por parametro y sobre esa fecha se hara el fetch
-
-    Args:
-        date (str): ayer o la fecha que se desee fetchear la info
-
-    Returns:
-        str: la fecha en formato string %m/%d/%Y 
-    """
-
-    if date == 'ayer':
-        today_date = datetime.now().strftime('%A').lower()
-        if today_date == 'monday':
-            yesterday_date = datetime.now() - timedelta(3)    
-        else:
-            yesterday_date = datetime.now() - timedelta(1)
-    else:
-        yesterday_date = pd.to_datetime(date)
-    
-    yesterday_date_str = yesterday_date.strftime('%m/%d/%Y')
-
-    return yesterday_date_str    
-
  
 #Ejecución del script completo
 def main(date,download_file_path,options):
     
     with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
-        time.sleep(2)
-        yesterday_date_str = set_date_to_fetch(date=date) # PARAMETRO IMPORTANTE, PASAR 'AYER' si se desea hacer fetch del dia anterior, de lo contrario pasar fecha como string en formato MM-DD-YYYY
-        yesterday_date_folder=yesterday_date_str.replace("/","-")
-        time.sleep(2)
-        try:
-            os.mkdir(f'{download_file_path}\\{yesterday_date_folder}') # creo una carpeta cuyo nombre es el dia que corresponde a la descarga de la metadata
-        except:
-            pass
-        time.sleep(2)
+        time.sleep(5)
         
         #Login
-        Login(date,download_file_path)
+        Login(date)
         
         time.sleep(5)
 
-
+    st.write("Ended")
     
     
 if __name__ == "__main__":
@@ -217,10 +160,7 @@ if __name__ == "__main__":
     download_file_path = st.text_input('Folder download',"")
     download_file_path=download_file_path.replace("/","\\")
     st.write('Folder download', download_file_path)
-    # executable_path = get_chromedriver_path()
-    executable_path = "notset"
-    # st.info(f'Chromedriver Path: {str(executable_path)}')
-    
+      
     prefs = {"download.default_directory":download_file_path}
 
     options.add_experimental_option('prefs', prefs)
@@ -230,9 +170,9 @@ if __name__ == "__main__":
         st.info('Selenium is running, please wait...')
         #result = run_selenium()
         main("12/10/2021",download_file_path,options)
-        #st.info(f'Result -> {result}')
-        st.info('Successful finished. Selenium log file is shown below...')
-        show_selenium_log()
+        
+        
+        
 
         
         
