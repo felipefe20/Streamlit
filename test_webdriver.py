@@ -85,13 +85,7 @@ def get_chromedriver_path():
 #LogIn
 def Login(day,download_file_path):
         
-    prefs = {
-        "download.default_directory":download_file_path
-        #"download.prompt_for_download": False,
-        #"download.directory_upgrade": True
-        }
-
-    options.add_experimental_option('prefs', prefs)
+    
         
     with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
         driver.get('https://home-c13.incontact.com/inContact/Manage/Reports/ContactHistory.aspx')
@@ -182,24 +176,6 @@ def set_date_to_fetch(date:str)->str:
 
     return yesterday_date_str    
 
-    
-def download_metadata_day(day):
-    time.sleep(30)
-    with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
-        Hours=[["12:00:00 AM","09:59:59 AM"],["10:00:00 AM","12:59:59 PM"],["13:00:00 PM","15:59:59 PM"],["16:00:00 PM","23:59:59 PM"]]
-
-        for hour in Hours:
-            #Date1
-            #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).clear()          
-            #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).send_keys(date)
-            clear1=driver.find_element_by_id("ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate")
-            time.sleep(2)
-            #clear1.clear
-            send1=driver.find_element_by_id("ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate")
-            
-            
-        time.sleep(5)
-        st.write("Succesful metadata day downloaded")
  
 #Ejecución del script completo
 def main(date,download_file_path,options):
@@ -217,8 +193,7 @@ def main(date,download_file_path,options):
         
         #Login
         Login(date,download_file_path)
-        #Metadata
-        #download_metadata_day(yesterday_date_str)
+        
         time.sleep(5)
 
 
@@ -240,11 +215,16 @@ if __name__ == "__main__":
         ---
         """, unsafe_allow_html=True)
     download_file_path = st.text_input('Folder download',"")
-    ownload_file_path=download_file_path.replace("/","\\")
+    download_file_path=download_file_path.replace("/","\\")
     st.write('Folder download', download_file_path)
     # executable_path = get_chromedriver_path()
     executable_path = "notset"
     # st.info(f'Chromedriver Path: {str(executable_path)}')
+    
+    prefs = {"download.default_directory":download_file_path}
+
+    options.add_experimental_option('prefs', prefs)
+    
     st.balloons()
     if st.button('Start Selenium run'):
         st.info('Selenium is running, please wait...')
