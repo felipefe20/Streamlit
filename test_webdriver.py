@@ -15,7 +15,9 @@ import time
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.utils import ChromeType
 
-
+download_file_path = st.text_input('Folder download',"")
+download_file_path=download_file_path.replace("/","\\")
+st.write('Folder download', download_file_path)
 
 options = Options()
 options.add_argument("--headless")
@@ -25,6 +27,13 @@ options.add_argument("--disable-gpu")
 options.add_argument("--disable-features=NetworkService")
 options.add_argument("--window-size=1920x1080")
 options.add_argument("--disable-features=VizDisplayCompositor")
+prefs = {
+        "download.default_directory":download_file_path
+        #"download.prompt_for_download": False,
+        #"download.directory_upgrade": True
+        }
+
+options.add_experimental_option('prefs', prefs)
 
 #initial settings
 def setting_selenium_options(download_file_path:str)->webdriver.ChromeOptions:
@@ -89,6 +98,7 @@ def Login(day):
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_btnNext"]'))).click()
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_tbxPassword"]'))).send_keys("Avril131215+")
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_btnLogin"]'))).click()
+        st.write("Login succesful")
         time.sleep(30)
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_CHOptionsHeaderPanelID"]'))).click()
 
@@ -140,7 +150,7 @@ def Login(day):
             WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportMainContent_btnDownload"]'))).click()
 
             time.sleep(5)
-            
+            st.write(f"Downloaded metadata from {hour[0]} to {hour[1]}")
             
         time.sleep(5)
     st.write("Login and metadata succesful")
@@ -194,13 +204,15 @@ def download_metadata_day(day):
 def main(date,download_file_path,options):
     
     with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
+        time.sleep(2)
         yesterday_date_str = set_date_to_fetch(date=date) # PARAMETRO IMPORTANTE, PASAR 'AYER' si se desea hacer fetch del dia anterior, de lo contrario pasar fecha como string en formato MM-DD-YYYY
         yesterday_date_folder=yesterday_date_str.replace("/","-")
+        time.sleep(2)
         try:
             os.mkdir(f'{download_file_path}\\{yesterday_date_folder}') # creo una carpeta cuyo nombre es el dia que corresponde a la descarga de la metadata
         except:
             pass
-        
+        time.sleep(2)
         
         #Login
         Login(date)
@@ -226,9 +238,7 @@ if __name__ == "__main__":
         Afterwards the log file of chromium is read and displayed.
         ---
         """, unsafe_allow_html=True)
-    download_file_path = st.text_input('Folder download',"")
-    download_file_path=download_file_path.replace("/","\\")
-    st.write('Folder download', download_file_path)
+    
     # executable_path = get_chromedriver_path()
     executable_path = "notset"
     # st.info(f'Chromedriver Path: {str(executable_path)}')
