@@ -82,15 +82,68 @@ def get_chromedriver_path():
     #return name
     
 #LogIn
-def Login():
+def Login(day):
     with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
         driver.get('https://home-c13.incontact.com/inContact/Manage/Reports/ContactHistory.aspx')
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_msl_txtUsername"]'))).send_keys("osfernandez@algvacations.com")
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_btnNext"]'))).click()
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_tbxPassword"]'))).send_keys("Avril131215+")
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_mslp_btnLogin"]'))).click()
+        time.sleep(30)
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_CHOptionsHeaderPanelID"]'))).click()
 
-    st.write("Login succesful")
+        #Teleperformance Bogota
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]'))).send_keys("Teleperformance Bogota")
+        
+        #MediaType Phone
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddMediaType"]'))).send_keys("Phone")
+
+        time.sleep(5)
+        if day=="yesterday":
+            yesterday_date=(pd.to_datetime("today")-timedelta(1)).strftime("%m/%d/%Y")
+            date=yesterday_date
+        else:
+            date=day
+
+        Hours=[["12:00:00 AM","09:59:59 AM"],["10:00:00 AM","12:59:59 PM"],["13:00:00 PM","15:59:59 PM"],["16:00:00 PM","23:59:59 PM"]]
+        
+        for hour in Hours:
+        #Date1
+            time.sleep(5)
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).clear()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).send_keys(date)
+            #Date2
+            time.sleep(2)
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).clear()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).send_keys(date)
+
+            #Hour1
+            time.sleep(2)
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]'))).clear()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartTime"]'))).send_keys(hour[0])
+            #Hour2
+            time.sleep(2)
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndTime"]'))).clear()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndTime"]'))).send_keys(hour[1])
+
+            #Scroll top of page
+            driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + Keys.HOME)
+            #Apply options
+            time.sleep(2)
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="btnApplyOptions_ShadowButtonSpan"]'))).click()
+            time.sleep(2)
+            driver.find_element_by_tag_name('body').send_keys(Keys.DOWN)
+            driver.find_element_by_tag_name('body').send_keys(Keys.DOWN)
+            time.sleep(10)
+            
+            #Download
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportMainContent_btnDownload"]'))).click()
+
+            time.sleep(5)
+            
+            
+        time.sleep(5)
+    st.write("Login and metadata succesful")
    
 #Date to fetch
 def set_date_to_fetch(date:str)->str:
@@ -150,9 +203,9 @@ def main(date,download_file_path,options):
         
         
         #Login
-        Login()
+        Login(date)
         #Metadata
-        download_metadata_day(yesterday_date_str)
+        #download_metadata_day(yesterday_date_str)
         time.sleep(5)
 
 
