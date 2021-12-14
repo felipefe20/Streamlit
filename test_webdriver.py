@@ -132,7 +132,9 @@ def download_metadata_day(day):
 
         #Show options click
         #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_CHOptionsHeaderPanelID"]'))).click()
-        WebDriverWait(driver, 50).until(EC.element_to_be_clickable((By.CLASS_NAME,'CHOptionsHeaderPanelButton'))).click()
+        time.sleep(30)
+        driver.find_elements_by_class_name("CHOptionsHeaderPanelButton")
+        #WebDriverWait(driver, 50).until(EC.element_to_be_clickable((By.CLASS_NAME,'CHOptionsHeaderPanelButton'))).click()
         """
         #Teleperformance Bogota
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]'))).send_keys("Teleperformance Bogota")
