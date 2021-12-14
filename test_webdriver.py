@@ -15,9 +15,7 @@ import time
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.utils import ChromeType
 
-download_file_path = st.text_input('Folder download',"")
-download_file_path=download_file_path.replace("/","\\")
-st.write('Folder download', download_file_path)
+
 
 options = Options()
 options.add_argument("--headless")
@@ -27,13 +25,7 @@ options.add_argument("--disable-gpu")
 options.add_argument("--disable-features=NetworkService")
 options.add_argument("--window-size=1920x1080")
 options.add_argument("--disable-features=VizDisplayCompositor")
-prefs = {
-        "download.default_directory":download_file_path
-        #"download.prompt_for_download": False,
-        #"download.directory_upgrade": True
-        }
 
-options.add_experimental_option('prefs', prefs)
 
 #initial settings
 def setting_selenium_options(download_file_path:str)->webdriver.ChromeOptions:
@@ -91,7 +83,16 @@ def get_chromedriver_path():
     #return name
     
 #LogIn
-def Login(day):
+def Login(day,download_file_path):
+        
+    prefs = {
+        "download.default_directory":download_file_path
+        #"download.prompt_for_download": False,
+        #"download.directory_upgrade": True
+        }
+
+    options.add_experimental_option('prefs', prefs)
+        
     with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
         driver.get('https://home-c13.incontact.com/inContact/Manage/Reports/ContactHistory.aspx')
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_BaseContent_msl_txtUsername"]'))).send_keys("osfernandez@algvacations.com")
@@ -215,7 +216,7 @@ def main(date,download_file_path,options):
         time.sleep(2)
         
         #Login
-        Login(date)
+        Login(date,download_file_path)
         #Metadata
         #download_metadata_day(yesterday_date_str)
         time.sleep(5)
@@ -238,7 +239,9 @@ if __name__ == "__main__":
         Afterwards the log file of chromium is read and displayed.
         ---
         """, unsafe_allow_html=True)
-    
+    download_file_path = st.text_input('Folder download',"")
+    ownload_file_path=download_file_path.replace("/","\\")
+    st.write('Folder download', download_file_path)
     # executable_path = get_chromedriver_path()
     executable_path = "notset"
     # st.info(f'Chromedriver Path: {str(executable_path)}')
