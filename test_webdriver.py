@@ -181,33 +181,20 @@ def download_metadata_day(day):
 #Ejecución del script completo
 def main(date,download_file_path,options):
     
-    #with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
-    # =============================
-    # Selenium Options
-    # =============================
-
-    # **********************
-    # PARAMETRO IMPORTANTE
-    # **********************
-
-    yesterday_date_str = set_date_to_fetch(date=date) # PARAMETRO IMPORTANTE, PASAR 'AYER' si se desea hacer fetch del dia anterior, de lo contrario pasar fecha como string en formato MM-DD-YYYY
-    yesterday_date_folder=yesterday_date_str.replace("/","-")
-    try:
-        os.mkdir(f'{download_file_path}\\{yesterday_date_folder}') # creo una carpeta cuyo nombre es el dia que corresponde a la descarga de la metadata
-    except:
-        pass
-    #os.chdir(download_file_path)
-    #download_file_path = os.getcwd() + f'\\Download folder\\{yesterday_date_folder}'
-
-
-    #driver = webdriver.Chrome("chromedriver.exe", options=options)
-    driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
-    #print(download_file_path)
-    #Login
-    Login(driver)
-    #Metadata
-    #download_metadata_day(yesterday_date_str)
-    time.sleep(5)
+    with webdriver.Chrome(options=options, service_log_path='selenium.log') as driver:
+        yesterday_date_str = set_date_to_fetch(date=date) # PARAMETRO IMPORTANTE, PASAR 'AYER' si se desea hacer fetch del dia anterior, de lo contrario pasar fecha como string en formato MM-DD-YYYY
+        yesterday_date_folder=yesterday_date_str.replace("/","-")
+        try:
+            os.mkdir(f'{download_file_path}\\{yesterday_date_folder}') # creo una carpeta cuyo nombre es el dia que corresponde a la descarga de la metadata
+        except:
+            pass
+        
+        
+        #Login
+        Login()
+        #Metadata
+        #download_metadata_day(yesterday_date_str)
+        time.sleep(5)
 
 
     
