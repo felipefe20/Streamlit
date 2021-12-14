@@ -133,20 +133,27 @@ def download_metadata_day(day):
         #Show options click
         #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_CHOptionsHeaderPanelID"]'))).click()
         time.sleep(30)
-        driver.find_elements_by_class_name("CHOptionsHeaderPanelButton")
-        #WebDriverWait(driver, 50).until(EC.element_to_be_clickable((By.CLASS_NAME,'CHOptionsHeaderPanelButton'))).click()
-        """
+        driver.find_elements_by_class_name("CHOptionsHeaderPanelButton").click()
+        
+        
         #Teleperformance Bogota
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]'))).send_keys("Teleperformance Bogota")
-
+        #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]'))).send_keys("Teleperformance Bogota")
+        time.sleep(2)
+        
+        driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddTeams"]').send_keys("Teleperformance Bogota")
+        """
         #MediaType Phone
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddMediaType"]'))).send_keys("Phone")
-
+        time.sleep(2)
+        #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddMediaType"]'))).send_keys("Phone")
+        driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_ddMediaType"]')
         #Iterate hours to download for every day
+        
         for hour in Hours:
             #Date1
-            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).clear()
-            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).send_keys(date)
+            #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).clear()          
+            #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).send_keys(date)
+            driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]')
+            driver.find_elements_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]')
             #Date2
             WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).clear()
             WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).send_keys(date)
