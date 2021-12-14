@@ -152,8 +152,8 @@ def download_metadata_day(day):
             #Date1
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).clear()          
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]'))).send_keys(date)
-            driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]').clear() 
-            driver.find_element_by_xpath('//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate"]').send_keys(date)
+            driver.find_element_by_id("ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate").clear() 
+            driver.find_element_by_id("ctl00_ctl00_BaseContent_ReportOptionsContent_txtStartDate").send_keys(date)
             #Date2
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).clear()
             #WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportOptionsContent_txtEndDate"]'))).send_keys(date)
