@@ -168,8 +168,8 @@ def download_metadata_day(day):
             #Download
             WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH,'//*[@id="ctl00_ctl00_BaseContent_ReportMainContent_btnDownload"]'))).click()
             """
-            time.sleep(5)
-            st.write("Succesful metadata day downloaded")
+        time.sleep(5)
+        st.write("Succesful metadata day downloaded")
  
 #Ejecución del script completo
 def main(date,download_file_path,options):
