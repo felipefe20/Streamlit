@@ -186,7 +186,7 @@ def main(date,download_file_path,options):
         #Login
         Login()
         #Metadata
-        #download_metadata_day(yesterday_date_str)
+        download_metadata_day(yesterday_date_str)
         time.sleep(5)
 
 
